@@ -12,15 +12,7 @@ router.get('/register', (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         // Extract user data from the request body
-        const {
-          email,
-          password,
-          firstName,
-          lastName,
-          birthDate,
-          phoneNumber,
-          dni,
-        } = req.body;
+        const {email, password, firstName, lastName, birthDate, phoneNumber, dni} = req.body;
         // Check if the email or username is already in use
         const existingUser = await User.findOne({ email });
         if (existingUser) {

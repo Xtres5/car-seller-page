@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Successful login, you can set a session or token here
-    res.redirect('/'); // Redirect to a dashboard or user profile page
+    res.redirect('/index'); // Redirect to a dashboard or user profile page
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');

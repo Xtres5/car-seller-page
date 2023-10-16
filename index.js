@@ -4,7 +4,8 @@ const app = express();
 require('dotenv').config();
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
-const carRouter =  require('./routes/cars');
+const carRouter =  require('./routes/upload');
+const postRouter =  require('./routes/post');
 
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI;
@@ -32,11 +33,11 @@ app.use(express.static('public'));
 app.use('/', registerRouter);
 app.use('/', loginRouter);
 app.use('/', carRouter);
+app.use('/', postRouter);
 
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
