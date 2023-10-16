@@ -6,6 +6,10 @@
   <h1><%= car.make %> <%= car.model %></h1>
   <p>Year: <%= car.year %></p>
   <p>Price: $<%= car.price %></p>
-  <!-- Add image rendering here -->
+  <div id="car-container">
+    <% car.images.forEach(imageId => { %>
+      <img src="<%= imageId %>" alt="<%= car.make %> <%= car.model %>">
+    <% }); %>
+  </div>
 </body>
 </html>

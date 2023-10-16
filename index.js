@@ -6,6 +6,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const carRouter =  require('./routes/upload');
 const postRouter =  require('./routes/post');
+const Car = require('./models/car');
 
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI;
@@ -23,8 +24,9 @@ db.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
 
-app.get('/', (req, res) => {
-  res.render('index'); // Render the index.ejs file in the "views" folder
+app.get('/', async (req, res) => {
+  const cars = await Car.find();
+  res.render('home', {cars});
 });
 
 app.use(express.json());

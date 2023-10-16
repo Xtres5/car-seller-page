@@ -17,16 +17,16 @@ router.post('/upload', upload.array('images'), async (req, res) => {
     // Loop through the uploaded files and upload them to Cloudinary
     for (const file of req.files) {
       const result = await cloudinary.uploader.upload(file.path);
-      images.push(result.public_id);
+      images.push(result.secure_url);
     }
 
     // Create a new car record and save the image IDs in the database
     const { make, model, year, price } = req.body;
-    const car = new Car({ make, model, year, price, images: images.join(',') });
+    const car = new Car({ make, model, year, price, images });
 
-    await car.save();
-
-    res.json({ success: true, car });
+    const savedCar = await car.save();
+    console.log(savedCar);
+    res.redirect(`/post/${savedCar._id}`);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to upload images' });

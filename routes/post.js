@@ -6,7 +6,6 @@ router.get('/post/:carId', async (req, res) => {
   try {
     const carId = req.params.carId;
     const car = await Car.findById(carId);
-
     if (!car) {
       return res.status(404).send('Car not found');
     }
@@ -16,6 +15,8 @@ router.get('/post/:carId', async (req, res) => {
     console.error(error);
     res.status(500).send('Error retrieving car');
   }
+
+
 });
 
   module.exports = router;

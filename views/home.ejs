@@ -6,6 +6,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola</h1>
+    <h1>Car List</h1>
+    <a href="./register">Register</a>
+    <a href="./login">Login</a>
+    <a href="./upload">Upload car</a>
+  <ul>
+    <% cars.forEach(car => { %>
+      <li>
+        <a href="./post/<%=car._id %>">>Ir al Post</a>
+        <p><strong>Make:</strong> <%= car.make %></p>
+        <p><strong>Model:</strong> <%= car.model %></p>
+        <p><strong>Year:</strong> <%= car.year %></p>
+        <p><strong>Price:</strong> $<%= car.price %></p>
+        <img src="<%= car.images[0] %>">
+      </li>
+    <% }); %>
+  </ul>
 </body>
 </html>
