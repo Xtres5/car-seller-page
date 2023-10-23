@@ -1,15 +1,103 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title><%= car.make %> <%= car.model %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      margin: 0;
+    }
+
+    #car-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    #car-details {
+      flex: 1;
+    }
+
+    #car-details p {
+      margin: 10px 0;
+    }
+
+    #image-carousel {
+      flex: 2;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+
+    #image-carousel img {
+      max-width: 100%;
+      display: none;
+    }
+
+    #image-carousel img:first-child {
+      display: block;
+    }
+
+    #carousel-buttons {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    #carousel-buttons button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    
+    #prev-button {
+      float: left;
+    }
+
+    #next-button {
+      float: right;
+    }
+  </style>
 </head>
 <body>
   <h1><%= car.make %> <%= car.model %></h1>
-  <p>Year: <%= car.year %></p>
-  <p>Price: $<%= car.price %></p>
   <div id="car-container">
-    <% car.images.forEach(imageId => { %>
-      <img src="<%= imageId %>" alt="<%= car.make %> <%= car.model %>">
-    <% }); %>
+    <div id="car-details">
+      <p>Year: <%= car.year %></p>
+      <p>Price: $<%= car.price %></p>
+      <p>Model: <%= car.model %></p>
+    </div>
+    <div id="image-carousel">
+      <% car.images.forEach(imageId => { %>
+        <img src="<%= imageId %>" alt="<%= car.make %> <%= car.model %>">
+      <% }); %>
+    </div>
   </div>
+  <div id="carousel-buttons">
+    <button id="prev-button" onclick="changeImage(-1)">Previous</button>
+    <button id="next-button" onclick="changeImage(1)">Next</button>
+  </div>
+
+  <script>
+    let currentImageIndex = 0;
+    const images = document.querySelectorAll('#image-carousel img');
+
+    function changeImage(offset) {
+      images[currentImageIndex].style.display = 'none';
+      currentImageIndex = (currentImageIndex + offset + images.length) % images.length;
+      images[currentImageIndex].style.display = 'block';
+    }
+  </script>
 </body>
 </html>
