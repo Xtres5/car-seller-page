@@ -1,0 +1,14 @@
+<html>
+<head>
+  <title>User Profile</title>
+</head>
+<body>
+  <h1>User Profile</h1>
+  <% if (user) { %>
+    <p>Welcome, <%= user.firstName %> <%= user.lastName %> (Username: <%= user.username %>)!</p>
+    <!-- Display other user properties as needed -->
+  <% } else { %>
+    <p>User data not found. Please log in.</p>
+  <% } %>
+</body>
+</html>

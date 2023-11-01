@@ -1,12 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
 require('dotenv').config();
-const registerRouter = require('./routes/register');
-const loginRouter = require('./routes/login');
-const carRouter =  require('./routes/upload');
-const postRouter =  require('./routes/post');
-const Car = require('./models/car');
+const session = require('express-session');
+const crypto = require('crypto');
+const passport = require('./routes/passport');
+
+const app = express();
 
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI;
@@ -24,18 +23,33 @@ db.once('open', () => {
   console.log('Connected to MongoDB Atlas');
 });
 
-app.get('/', async (req, res) => {
-  const cars = await Car.find();
-  res.render('home', {cars});
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
+
+app.use(session({
+  secret: crypto.randomBytes(32).toString('hex'),
+  resave: false, 
+  saveUninitialized: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+const homeRouter = require('./routes/home');
+app.use('/', homeRouter);
+const profileRouter = require('./routes/profile');
+app.use('/', profileRouter);
+const registerRouter = require('./routes/register');
 app.use('/', registerRouter);
+const loginRouter = require('./routes/login');
 app.use('/', loginRouter);
+const logoutRouter = require('./routes/logout');
+app.use('/', logoutRouter);
+const carRouter =  require('./routes/upload');
 app.use('/', carRouter);
+const postRouter =  require('./routes/post');
 app.use('/', postRouter);
+
 
 
 // Set the view engine to EJS

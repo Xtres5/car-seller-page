@@ -5,7 +5,7 @@ const upload = require('./cloudinary');
 const cloudinary = require('cloudinary').v2;
 
 // Set up your Cloudinary configuration here
-router.get('/upload', (req, res) => {
+router.get('/upload', isAuthenticated, (req, res) => {
   res.render('upload'); // You need to set up your view engine and templates for rendering
 });
 
@@ -34,3 +34,13 @@ router.post('/upload', upload.array('images'), async (req, res) => {
 });
 
 module.exports = router;
+
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    // User is authenticated; proceed to the next middleware or route
+    next();
+  } else {
+    // User is not authenticated; redirect to the login page or other action
+    res.redirect('/login');
+  }
+}
