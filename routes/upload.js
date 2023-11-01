@@ -10,7 +10,7 @@ router.get('/upload', isAuthenticated, (req, res) => {
 });
 
 // Create a route for image uploads
-router.post('/upload', upload.array('images'), async (req, res) => {
+router.post('/upload', isAuthenticated, upload.array('images'), async (req, res) => {
   try {
     const images = [];
 
